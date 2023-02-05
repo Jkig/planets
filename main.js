@@ -1,8 +1,7 @@
 import * as THREE from "three"
 import "./style.css"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-// TODO swap from orbit control to the oposite, fixed cam position and variable look
-import { Vector3 } from "three";
+import jupiterImage from '/img/2k_jupiter.jpg';
 
 
 const sizes = {
@@ -15,25 +14,27 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(5);
 document.body.appendChild(renderer.domElement)
 
-
 // all units in km, i'll see if that needs to be optimized...
 let distanceFromSun = 778000000;
 let jupiterSize = 69911;
 let europaOrbit = 671000;
 let sunSize = 1400000;
 
-// scene
 const scene = new THREE.Scene();
-// gemetry
 //    jupiter
-const jupiter = new THREE.SphereGeometry(jupiterSize, 4, 4, );//69911, 64, 64);
-const jupiterTexture = new THREE.MeshStandardMaterial({ color: '#FF8C00', });
-//const jupiter = new THREE.BoxGeometry(jupiterSize, 64, 64, );//69911, 64, 64);
-//const jupiterTexture = new THREE.MeshBasicMaterial({ color: '#FF8C00', });
+const textureLoader = new THREE.TextureLoader();
+const jupiter = new THREE.SphereGeometry(jupiterSize, 64, 64, );
+const jupiterTexture = new THREE.MeshStandardMaterial({
+  // color: '#FF8C00',
+  map: textureLoader.load(jupiterImage)
+});
+
+
+
 const meshJupiter = new THREE.Mesh(jupiter, jupiterTexture);
 scene.add(meshJupiter);
 //    sun
-const sun = new THREE.SphereGeometry(sunSize, 64, 64, );//69911, 64, 64);
+const sun = new THREE.SphereGeometry(sunSize, 64, 64, );
 const sunTexture = new THREE.MeshBasicMaterial({ color: '#FDB813', });
 const meshSun = new THREE.Mesh(sun, sunTexture);
 scene.add(meshSun);
@@ -44,7 +45,7 @@ meshJupiter.position.x = distanceFromSun;
 
 
 // Light
-const light = new THREE.PointLight(0xFDB813, 2);
+const light = new THREE.PointLight(0xFDB813, 1);
 light.position.set(5000, 0, 0 );// TODO this as part of set up for movement
 scene.add(light);
 
@@ -63,7 +64,7 @@ orbit.update();
 
 // animate turn
 function animate(time) {
-  meshJupiter.rotation.y = time / 500;
+  meshJupiter.rotation.y = time / 1000;
   renderer.render(scene, camera);
   orbit.update();
 };
