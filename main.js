@@ -71,7 +71,8 @@ const meshSun = new THREE.Mesh(sun, sunTexture);
 scene.add(meshSun);
 
 
-const light = new THREE.PointLight(0xFDB813, 1.7, distanceFromSun*2);
+// const light = new THREE.PointLight(0xFDB813, 1.7, distanceFromSun*2); // because the true color is white in space lol
+const light = new THREE.PointLight(0xFFFFFF, 1.7, distanceFromSun*2);
 scene.add(light);
 const backgroundLight = new THREE.PointLight(0xFFFFFF, .15)
 scene.add(backgroundLight)
@@ -133,3 +134,4 @@ const loop = () => {
 };
 loop()
 */
+

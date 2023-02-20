@@ -12,7 +12,9 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
+    "color-temperature": "^0.2.7",
     "dat.gui": "^0.7.9",
+    "node": "^19.6.0",
     "three": "^0.149.0"
   }
 }
