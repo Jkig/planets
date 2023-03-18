@@ -1,36 +1,45 @@
 import * as THREE from "three"
 import "./style.css"
-import { FirstPersonControls } from "../planets/FirstPersonControls";
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-//import * as dat from "dat.gui";
+// import { FirstPersonControls } from "../planets/FirstPersonControls";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// import * as dat from "dat.gui";
 
-import jupiterImage from '/img/2k_jupiter.jpg';
 import galaxy from '/img/big_galaxy.jpg';
 
-// TODO:
-/*
-* spacebar or something to toggle look around, its weird????? idk yet
-* update imorted constans as a dictunary
-*/
+import object from "./basicScene.json";
 
-// master speed scales eveything, so other values can be ported in ezier
-let speed = .005
-// let scale size = .01 //if this is more preformant??
 
-// time values in seconds (change to a dictinary later)
-let jupiterDayLength_preScale = 35609
-let jupiterYearLength_preScale = 374371200
-let europaOrbitLenght_preScale = 306000
-// europa is tidally locked
-// post scale:
+import jupiterImage from '/img/2k_jupiter.jpg';
+import earthImage from '/img/8k_earth_daymap.jpg';
+
+let surface = null
+
+if (object.planetFile !== '/img/2k_jupiter.jpg'){
+  surface = jupiterImage
+}else{
+  surface = earthImage
+}
+
+
+
+
+let speed = .01
+
+
+
+let jupiterDayLength_preScale = object.daylength
+//let jupiterYearLength_preScale = object.yearlength
+let europaOrbitLenght_preScale = object.orbitLenght
+
+let distanceFromSun = object.distanceFromSun
+let jupiterSize = object.planetSize
+let europaOrbit = object.cameraOrbit
+let sunSize = object.sunSize
+
+
 let jupiterDayLength = jupiterDayLength_preScale*speed
-let jupiterYearLength = jupiterYearLength_preScale*speed
+//let jupiterYearLength = jupiterYearLength_preScale*speed
 let europaOrbitLenght = europaOrbitLenght_preScale*speed
-// all units in km, i'll see if that needs to be optimized...
-let distanceFromSun = 778000000;
-let jupiterSize = 69911;
-let europaOrbit = 671000;
-let sunSize = 1400000;
 
 
 // setting up some basics
@@ -39,10 +48,15 @@ const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
 };
-const renderer = new THREE.WebGLRenderer();
+//const renderer = new THREE.WebGLRenderer(); // old, worked
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.querySelector("#bg"),
+})
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(5);
-document.body.appendChild(renderer.domElement)
+
+//document.body.appendChild(renderer.domElement)
+
 const scene = new THREE.Scene();
 const textureLoader = new THREE.TextureLoader();
 
@@ -58,10 +72,10 @@ scene.add(fullOutside)
 const jupiter = new THREE.SphereGeometry(jupiterSize, 64, 64, );
 const jupiterTexture = new THREE.MeshStandardMaterial({
   // color: '#FF8C00',
-  map: textureLoader.load(jupiterImage)
+  map: textureLoader.load(surface)
 });
 const meshJupiter = new THREE.Mesh(jupiter, jupiterTexture);
-meshJupiter.rotation.z = 0.05462881
+meshJupiter.rotation.z = object.tilt
 meshJupiter.position.x = distanceFromSun;
 scene.add(meshJupiter);
 
@@ -85,25 +99,37 @@ camera.position.z = europaOrbit;
 camera.position.x = distanceFromSun;
 scene.add(camera);
 
-const controls = new FirstPersonControls(camera,renderer.domElement);
+//const controls = new FirstPersonControls(camera,renderer.domElement);
+//controls.movementSpeed = 0;
+//controls.lookSpeed = .1
+const controls = new OrbitControls(camera,renderer.domElement);
 controls.movementSpeed = 0;
 controls.lookSpeed = .1
+const posiotion_center = new THREE.Vector3( distanceFromSun, 0, 0 );
+controls.target = posiotion_center;
+//controls.target = meshJupiter.positio
+
 controls.update(clock.getDelta());
 
+/*
+const gui = new dat.GUI();
+const options = {
+  speed: .005
+};
+gui.add(options, 'speed', 0, .01).onChange(function(e){
+  console.log(`${options.speed}`)
+});
+*/
 
 
 function animate(time) {
 
-  /* only if testing with gui??*/
-  jupiterDayLength = jupiterDayLength_preScale*speed
-  jupiterYearLength = jupiterYearLength_preScale*speed
-  europaOrbitLenght = europaOrbitLenght_preScale*speed
-
-
   meshJupiter.rotation.y = time / jupiterDayLength;
   
+  /* // unneccisary lol, irl we should be doing one or the other
   meshJupiter.position.z = distanceFromSun*Math.cos(time/jupiterYearLength)
   meshJupiter.position.x = distanceFromSun*Math.sin(time/jupiterYearLength)
+  */
 
   camera.position.z = meshJupiter.position.z+europaOrbit*Math.cos(time/europaOrbitLenght);
   camera.position.x = meshJupiter.position.x+europaOrbit*Math.sin(time/europaOrbitLenght);

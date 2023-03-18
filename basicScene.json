@@ -1,0 +1,14 @@
+{
+    "planetFile": "/img/2k_jupiter.jpg",
+
+    "daylength": 35609,
+    "yearlength": 374371200,
+    "orbitLenght": 306000,
+
+    "distanceFromSun": 778000000,
+    "planetSize": 69911,
+    "cameraOrbit": 671000,
+    "sunSize": 1400000,
+
+    "tilt": 0.05462881
+}

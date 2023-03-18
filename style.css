@@ -8,3 +8,9 @@ body,
 html{
   overflow-x: hidden;
 }
+
+canvas {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+}

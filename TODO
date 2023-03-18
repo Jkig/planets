@@ -1,0 +1,17 @@
+Things i want to get done:
+
+In basicScene.json
+I need to add the folowing properties:
+tilt
+sun color
+
+then i want to make a simple react page where you can select the different options, with given bounds to stay in habitable regions
+then use local storage to create equivilant to basic Scene json, then on submit send user to view the system
+
+lastly i need to make the earth look good, use shader to transition from the day to night, and add normal map and spectral map, maybe add the clouds in too
+
+
+and other moons.
+
+
+(don't need it to all be react to do a basic one)
