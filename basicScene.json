@@ -1,8 +1,9 @@
 {
-    "planetFile": "/img/2k_jupiter.jpg",
+    "planetFile": "/img/8k_earth_daymap.jpg",
     "speed": 0.01,
 
     "ourSun": true,
+    "isEarth": true,
     "sunColor": "#FFFFFF",
 
     "daylength": 35609,

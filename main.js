@@ -5,17 +5,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import galaxy from '/img/big_galaxy.jpg';
 import object from "./basicScene.json";
 
-import jupiterImage from '/img/2k_jupiter.jpg';
-import earthImage from '/img/8k_earth_daymap.jpg';
-
-let surface = null
-
-if (object.planetFile !== '/img/2k_jupiter.jpg'){ // this if statement is off, so i can test earth
-  surface = jupiterImage
-}else{
-  surface = earthImage
-}
-
 
 let sunSize = object.sunSize
 
@@ -52,12 +41,27 @@ const outsideMat = new THREE.MeshStandardMaterial({
 });
 const space = new THREE.Mesh(outside,outsideMat);
 scene.add(space)
-
+//earth is special, so adding a bunch to it, need texture, reflection, and then later to swap in the night map
 
 const planetGeometry = new THREE.SphereGeometry(object.planetSize, 64, 64, );
-const planetTexture = new THREE.MeshStandardMaterial({
-  map: textureLoader.load(surface)
-});
+let planetTexture = null;
+
+if (object.isEarth){
+  planetTexture = new THREE.MeshPhongMaterial({
+    map: textureLoader.load(object.planetFile),
+    bumpMap: textureLoader.load("../img/2k_earth_normal_map.jpg"),
+    bumpScale: 0.5,
+    specularMap: textureLoader.load("../img/2k_earth_specular_map.jpg"),
+    shininess: 0.5,
+  });
+}else{
+  planetTexture = new THREE.MeshStandardMaterial({
+    map: textureLoader.load(object.planetFile)
+  });
+}
+
+
+
 const planet = new THREE.Mesh(planetGeometry, planetTexture);
 planet.rotation.z = object.tilt
 planet.position.x = object.distanceFromSun;
@@ -82,8 +86,8 @@ scene.add(backgroundLight)
 
 // camera (titan)
 const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 1, 1778000000);
-camera.position.z = object.cameraOrbit;
-camera.position.x = object.distanceFromSun;
+//camera.position.z = object.cameraOrbit;
+camera.position.x = object.distanceFromSun - object.cameraOrbit;
 scene.add(camera);
 
 
@@ -93,11 +97,12 @@ controls.target = posiotion_center;
 controls.update(clock.getDelta());
 
 
-
 function animate(time) {
   planet.rotation.y = time / planetDayLength;
+  // i should be able to make the folowing much less expensive
   camera.position.z = planet.position.z+object.cameraOrbit*Math.cos(time/cameraOrbitLenght);
   camera.position.x = planet.position.x+object.cameraOrbit*Math.sin(time/cameraOrbitLenght);
+
 
   controls.update(clock.getDelta());
   renderer.render(scene, camera);
