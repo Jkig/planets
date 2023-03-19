@@ -3,7 +3,7 @@ import "./style.css"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import galaxy from '/img/big_galaxy.jpg';
-import object from "./basicScene.json";
+import object from "./earthScene.json";
 
 
 let sunSize = object.sunSize
@@ -68,7 +68,11 @@ planet.position.x = object.distanceFromSun;
 scene.add(planet);
 
 const sun = new THREE.SphereGeometry(sunSize, 64, 64, );
-const sunTexture = new THREE.MeshBasicMaterial({ color: '#FDB813', });
+const sunTexture = new THREE.MeshBasicMaterial({
+  //map: textureLoader.load("../img/2k_sun.jpg"),
+  //emissive: '#FDB813',
+  color: '#FDB813',
+});
 if (object.ourSun){
   console.log("its our sun, so here we use #FDB813, in space, the sun is actually white #FFFFFF, ppl wouldn't like if i showed it this way though")
 }else{
@@ -85,9 +89,9 @@ scene.add(backgroundLight)
 
 
 // camera (titan)
-const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 1, 1778000000);
-//camera.position.z = object.cameraOrbit;
-camera.position.x = object.distanceFromSun - object.cameraOrbit;
+const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 1, 3*object.distanceFromSun);
+camera.position.z = object.cameraOrbit;
+camera.position.x = object.distanceFromSun;
 scene.add(camera);
 
 
@@ -100,8 +104,11 @@ controls.update(clock.getDelta());
 function animate(time) {
   planet.rotation.y = time / planetDayLength;
   // i should be able to make the folowing much less expensive
+  if (object.isCameraOrbit){
   camera.position.z = planet.position.z+object.cameraOrbit*Math.cos(time/cameraOrbitLenght);
   camera.position.x = planet.position.x+object.cameraOrbit*Math.sin(time/cameraOrbitLenght);
+  }
+  
 
 
   controls.update(clock.getDelta());

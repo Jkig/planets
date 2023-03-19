@@ -15,3 +15,7 @@ and other moons.
 
 
 (don't need it to all be react to do a basic one)
+
+standardize and fix up the perspective camera where i want it to be (doesn't make far away things small enought)
+
+can have ppl calibrate their screne by lining up moon and sun, and having a slider control perspective, will do this later...

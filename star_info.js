@@ -46,7 +46,3 @@ function starProperties(mass) {
         surfaceTemperature: surfaceTemperature,
     };
 }
-
-
-const star = starProperties(8.5);
-console.log(star);

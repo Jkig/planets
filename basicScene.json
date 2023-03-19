@@ -1,16 +1,19 @@
 {
-    "planetFile": "/img/8k_earth_daymap.jpg",
+    "planetFile": "/img/2k_jupiter.jpg",
+    "planetMass": 1.899e27,
     "speed": 0.01,
 
+    "isCameraOrbit": true,
+
     "ourSun": true,
-    "isEarth": true,
+    "isEarth": false,
     "sunColor": "#FFFFFF",
 
     "daylength": 35609,
     "yearlength": 374371200,
     "orbitLenght": 306000,
 
-    "distanceFromSun": 778000000,
+    "distanceFromSun": 71492000,
     "planetSize": 69911,
     "cameraOrbit": 671000,
     "sunSize": 1400000,
