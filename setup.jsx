@@ -16,7 +16,7 @@ function App() {
         distanceFromSun: 1,// in AU
         closest: .75,
         furthest: 1.1,
-        orbiting: true,
+        orbiting: false,
     });
 
     const handleChangeMass = e => {
@@ -68,18 +68,21 @@ function App() {
         setData({...data, distanceFromPlanet: e.target.value})
     }
 
-    const handleCalculate = e =>{
-        let star = starProperties(data.mass)// have sun's luminosity, and update both things
+    const handleChangeOrbit = e =>{
+        setData({...data, orbiting: e.target.checked})
+    }
 
-        setData({...data, closest: Math.sqrt(star.luminosity/(3.828e26))*.75, furthest: Math.sqrt(star.luminosity/(3.828e26))*1.1})
+    const handleCalculate = e =>{
+        // should make this /\ cleaner
         // now create our json and store it
         let sceneObject = null
-
+        // now set everything else
         if (data.earth){
             sceneObject = earthScene
             // earth constant:
             // console.log("earth", 2*Math.PI*Math.sqrt(1/(6.6743e-11*5.972e24))) // earth
             const earthGravitational = 3.147147566443759e-7
+
             sceneObject.orbitLength = Math.sqrt(Math.pow(data.distanceFromPlanet*sceneObject.planetSize*1000, 3))*earthGravitational
         }else{
             sceneObject = basicScene
@@ -89,14 +92,24 @@ function App() {
             // then multiply by sqrt(r^3), r = planetradius*distanceFromPlanet
             sceneObject.orbitLength = Math.sqrt(Math.pow(data.distanceFromPlanet*sceneObject.planetSize*1000, 3))*jupiterGravitational
         }
-        // now set everything else
-        // sun properties (size/color)
+        const starInfo = starProperties(data.mass)
         // ourSun t/f
+        if (data.ourSun){
+
+        }else{
+        // sun properties (size/color)
+            sceneObject.sunColor = starInfo.color
+            sceneObject.sunSize = starInfo.radius
+        }
         // distance from sun
-        // distance from earth
+        sceneObject.distanceFromSun = 149600000*data.distanceFromSun
+        // distance from planet
+        sceneObject.distanceFromPlanet = sceneObject.planetSize*data.distanceFromPlanet
         // time for planet orbit (don't actually care about planets rn)
-        // time for camera orbit 
+        // time for camera orbit -- handled in the if/else above
         // isCameraOrbit t/f
+        sceneObject.isCameraOrbit = data.orbiting
+        // now localstore
     }
 
     return (
@@ -150,6 +163,17 @@ function App() {
                     <div className="slidecontainer">
                         <input type="range" min="2" max="200" className="slider" id="myRange" onChange={handleChangeDistance}/>
                     </div>
+                </li>
+                <li>
+                    <ul className='horizontal'>
+                        <li className='horizontali'>Orbit automatically</li>
+                        <li className='horizontali'>
+                            <label className="container">
+                                <input type="checkbox" defaultChecked="false" onClick={handleChangeOrbit}/>
+                                <span className="checkmark"></span>
+                            </label>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                 <button className="createButton" type="submit" onClick={handleCalculate}>
