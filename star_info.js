@@ -1,6 +1,9 @@
 // I'm using color-temperature package
 // npm install --save color-temperature
-import ct from "color-temperature"
+//import ct from "color-temperature"// - its broken now lol, so i copied the code into the other file
+// respect to https://github.com/neilbartlett/color-temperature
+
+import colorTemperature2rgbUsingTH from "./color-temp";
 
 function SmallToHex(c) {
     let hex = c.toString(16);
@@ -29,7 +32,7 @@ function starProperties(mass) {
 
     // Calculate the star's color in hex
     // bad code lol, lets try this package:
-    const rgb = ct.colorTemperature2rgbUsingTH(surfaceTemperature);
+    const rgb = colorTemperature2rgbUsingTH(surfaceTemperature);
     const color = toHex(rgb)
     /*
     const red = Math.round(Math.min(255, Math.max(0, 255 * (surfaceTemperature - 2000) / 8000)));
@@ -46,3 +49,14 @@ function starProperties(mass) {
         surfaceTemperature: surfaceTemperature,
     };
 }
+
+function justLuminosity(mass) {
+    const solarMass = 1.9891e30; // Mass of the Sun in kg
+    const solarLuminosity = 3.828e26; // Luminosity of the Sun in watts
+
+
+    // Calculate the star's luminosity
+    return Math.pow(mass*solarMass, 3.5) * solarLuminosity / Math.pow(solarMass, 3.5);
+}
+
+export { starProperties, justLuminosity};

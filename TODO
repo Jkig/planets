@@ -19,3 +19,5 @@ and other moons.
 standardize and fix up the perspective camera where i want it to be (doesn't make far away things small enought)
 
 can have ppl calibrate their screne by lining up moon and sun, and having a slider control perspective, will do this later...
+
+resize inputs so there is an inner half and outer half, can cover habitable zones, and then crazy stuff, more intuative

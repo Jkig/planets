@@ -115,3 +115,12 @@ function animate(time) {
   renderer.render(scene, camera);
 };
 renderer.setAnimationLoop(animate);
+
+// wonder if this is expensive, idk
+window.addEventListener('resize', () => {
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(sizes.width, sizes.height);
+});
