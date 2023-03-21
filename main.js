@@ -63,7 +63,9 @@ if (object.isEarth){
     map: textureLoader.load(object.planetFile)
   });
 }
+
 // all the new shader stuff here:
+/*
 const uniforms = {
   textureDay: { value: textureDay },
   textureNight: { value: textureNight },
@@ -94,22 +96,22 @@ const fragmentShader = `
   varying vec3 vNormal;
 
   void main() {
-    vec3 lightDirection = normalize(sunPosition - vPosition);
+    vec3 lightDirection = vec3(1.0,0.0,0.0);
     float lightIntensity = max(dot(vNormal, lightDirection), 0.0);
     
     vec4 dayColor = texture2D(textureDay, vUv);
     vec4 nightColor = texture2D(textureNight, vUv);
 
-    gl_FragColor = mix(nightColor, dayColor, lightIntensity);
+    gl_FragColor = mix(dayColor, nightColor, lightIntensity);
   }
 `;
-// add if here later:
+// add if statement here:
 planetTexture = new THREE.ShaderMaterial({
   uniforms,
   vertexShader,
   fragmentShader,
 });
-
+*/
 
 const planet = new THREE.Mesh(planetGeometry, planetTexture);
 planet.rotation.z = object.tilt
@@ -151,12 +153,9 @@ const sunTexture = object.ourSun ? new THREE.MeshStandardMaterial({
   emissiveMap: textureLoader.load("../img/2k_sun_grey.png"),
   emissiveIntensity: brightness,
   emissive: sunColor,
-}); new THREE.MeshBasicMaterial({color: sunColor,}); /* // new THREE.MeshBasicMaterial({color: sunColor,}); //
+}); new THREE.MeshBasicMaterial({color: sunColor,}); 
 
-const sunTexture = new THREE.MeshBasicMaterial({// good, works
-  color: sunColor,
-});
-*/
+
 const meshSun = new THREE.Mesh(sun, sunTexture);
 scene.add(meshSun);
 
@@ -188,7 +187,6 @@ function animate(time) {
   camera.position.z = planet.position.z+object.cameraOrbit*Math.cos(time/cameraOrbitLenght);
   camera.position.x = planet.position.x+object.cameraOrbit*Math.sin(time/cameraOrbitLenght);
   }
-  
 
 
   controls.update(clock.getDelta());
