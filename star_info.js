@@ -11,7 +11,8 @@ function SmallToHex(c) {
 }
 
 function toHex(obj) {
-    return "#" + SmallToHex(obj.red) + SmallToHex(obj.green) + SmallToHex(obj.blue)
+    const str = "#" + SmallToHex(obj.red) + SmallToHex(obj.green) + SmallToHex(obj.blue)
+    return str.toUpperCase()
 }
 
 

@@ -70,23 +70,53 @@ planet.position.x = object.distanceFromSun;
 scene.add(planet);
 
 const sun = new THREE.SphereGeometry(sunSize, 64, 64, );
-const sunTexture = new THREE.MeshBasicMaterial({
-  //map: textureLoader.load("../img/2k_sun.jpg"),
-  //emissive: '#FDB813',
-  color: '#FDB813',
-});
+let sunColor = null
 if (object.ourSun){
+  sunColor = '#FDB813',
   console.log("its our sun, so here we use #FDB813, in space, the sun is actually white #FFFFFF, ppl wouldn't like if i showed it this way though")
 }else{
-  sunTexture.color = object.color
+  sunColor = object.sunColor
 }
+
+// take in intensity and use to scale light and emissive somehwat
+
+let brightness = 2
+if (object.luminosity < 3e25){
+  brightness = 1
+}else if (object.luminosity > 3e27){
+  brightness = 3
+}else if (object.luminosity > 3e28){
+  brightness = 5
+}else if (object.luminosity > 3e29){
+  brightness = 7
+}else if (object.luminosity > 3e31){
+  brightness = 10
+}else if (object.luminosity > 3e33){
+  brightness = 15
+}
+
+const sunTexture = object.ourSun ? new THREE.MeshStandardMaterial({
+  emissiveMap: textureLoader.load("../img/2k_sun.jpg"),
+  emissiveIntensity: brightness,
+  emissive: 0xFFFFFF,
+}) : new THREE.MeshStandardMaterial({
+  emissiveMap: textureLoader.load("../img/2k_sun_grey.png"),
+  emissiveIntensity: brightness,
+  emissive: sunColor,
+}); new THREE.MeshBasicMaterial({color: sunColor,}); /* // new THREE.MeshBasicMaterial({color: sunColor,}); //
+
+const sunTexture = new THREE.MeshBasicMaterial({// good, works
+  color: sunColor,
+});
+*/
 const meshSun = new THREE.Mesh(sun, sunTexture);
 scene.add(meshSun);
 
 
-const light = new THREE.PointLight(0xFFFFFF, 1.7, object.distanceFromSun*2);//todo sun color
+const light = new THREE.PointLight(object.sunColor, 0.9 + brightness*.4, object.distanceFromSun*2);//todo sun color
 scene.add(light);
 const backgroundLight = new THREE.PointLight(0xFFFFFF, .15)// not dependent on sun
+//const backgroundLight = new THREE.AmbientLight(0xFFFFFF, .15)
 scene.add(backgroundLight)
 
 

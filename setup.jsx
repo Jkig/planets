@@ -7,6 +7,7 @@ import { starProperties, justLuminosity } from './star_info'
 import earthScene from "./earthScene.json";
 import basicScene from "./basicScene.json";
 
+
 function App() {
     const [data, setData] = useState({
         ourSun: true,
@@ -17,6 +18,7 @@ function App() {
         closest: .75,
         furthest: 1.1,
         orbiting: true,
+        luminosity: 3.828e26,
     });
 
     const handleChangeMass = e => {
@@ -65,14 +67,14 @@ function App() {
 
     // store habitable zone in the local object, and use useeffect to update habitable zone
     const handleChangeDistance = e =>{
-        setData({...data, distanceFromPlanet: e.target.value})
+        setData({...data, distanceFromPlanet: Number(e.target.value)})
     }
 
     const handleChangeOrbit = e =>{
         setData({...data, orbiting: e.target.checked})
     }
 
-    const handleCalculate = e =>{
+    const handleCalculate = () =>{
         // should make this /\ cleaner
         // now create our json and store it
         let sceneObject = null
@@ -96,22 +98,24 @@ function App() {
         // ourSun t/f
         if (!data.ourSun){
         // sun properties (size/color)
+            sceneObject.ourSun = false
             sceneObject.sunColor = starInfo.color
-            sceneObject.sunSize = starInfo.radius
-            console.log(sceneObject.sunSize)
+            sceneObject.sunSize = starInfo.radius/1000
         }
         // distance from sun
         sceneObject.distanceFromSun = 149600000*data.distanceFromSun;
         // distance from planet
-        sceneObject.distanceFromPlanet = sceneObject.planetSize*data.distanceFromPlanet;
+        sceneObject.cameraOrbit = sceneObject.planetSize*data.distanceFromPlanet;
         // time for planet orbit (don't actually care about planets rn)
         // time for camera orbit -- handled in the if/else above
         // isCameraOrbit t/f
         sceneObject.isCameraOrbit = data.orbiting;
+        // luminosity
+        sceneObject.luminosity = starInfo.luminosity
         // now localstore
+        localStorage.clear();
         localStorage.setItem("sceneData", JSON.stringify(sceneObject));
     }
-
     return (
         <div className='main'>
             <h1>Build the system</h1>
@@ -155,7 +159,7 @@ function App() {
                             <li className='horizontali'>{data.distanceFromSun}AU</li>
                             <li className='horizontali'>Habitable from {Math.round(data.closest * 100) / 100} to {Math.round(data.furthest * 100) / 100}</li>
                         </ul>
-                        <input type="range" min="10" max="200" className="slider" id="myRange" defaultValue={100} onChange={handleChangePlanetDistance}/>
+                        <input type="range" min="1" max="200" className="slider" id="myRange" defaultValue={100} onChange={handleChangePlanetDistance}/>
                     </div>
                 </li>
                 <li>

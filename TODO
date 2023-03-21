@@ -1,9 +1,5 @@
 Things i want to get done:
 
-In basicScene.json
-I need to add the folowing properties:
-tilt
-sun color
 
 then i want to make a simple react page where you can select the different options, with given bounds to stay in habitable regions
 then use local storage to create equivilant to basic Scene json, then on submit send user to view the system
@@ -26,3 +22,9 @@ resize inputs so there is an inner half and outer half, can cover habitable zone
 More urgent:
 I need to allow camera/whole scene to resize if they make super crazy big systemes, for later
 there is a bug for other sized stars, probably unit conversion
+add a back button
+make sun look good keep texture for other colors, not sure yet how to do this
+pass in luminosity to scale brightness (maybe just number relative to sun... index it to 1)
+read the local object to initialize everything for this
+
+probs a tiny bit of ambient light after shader for night stuff
