@@ -28,3 +28,4 @@ pass in luminosity to scale brightness (maybe just number relative to sun... ind
 read the local object to initialize everything for this
 
 probs a tiny bit of ambient light after shader for night stuff
+(night lights emissive??)

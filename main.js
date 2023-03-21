@@ -32,6 +32,8 @@ renderer.setPixelRatio(5);
 
 const scene = new THREE.Scene();
 const textureLoader = new THREE.TextureLoader();
+const textureDay = textureLoader.load(object.planetFile);
+const textureNight = textureLoader.load('../img/8k_earth_nightmap.jpg');
 
 
 // Objects/textures
@@ -50,7 +52,7 @@ let planetTexture = null;
 
 if (object.isEarth){
   planetTexture = new THREE.MeshPhongMaterial({
-    map: textureLoader.load(object.planetFile),
+    map: textureDay,
     bumpMap: textureLoader.load("../img/2k_earth_normal_map.jpg"),
     bumpScale: 0.5,
     specularMap: textureLoader.load("../img/2k_earth_specular_map.jpg"),
@@ -62,12 +64,11 @@ if (object.isEarth){
   });
 }
 
-
-
 const planet = new THREE.Mesh(planetGeometry, planetTexture);
 planet.rotation.z = object.tilt
 planet.position.x = object.distanceFromSun;
 scene.add(planet);
+
 
 const sun = new THREE.SphereGeometry(sunSize, 64, 64, );
 let sunColor = null
