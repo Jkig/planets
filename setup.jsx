@@ -16,7 +16,7 @@ function App() {
         distanceFromSun: 1,// in AU
         closest: .75,
         furthest: 1.1,
-        orbiting: false,
+        orbiting: true,
     });
 
     const handleChangeMass = e => {
@@ -94,9 +94,7 @@ function App() {
         }
         const starInfo = starProperties(data.mass)
         // ourSun t/f
-        if (data.ourSun){
-
-        }else{
+        if (!data.ourSun){
         // sun properties (size/color)
             sceneObject.sunColor = starInfo.color
             sceneObject.sunSize = starInfo.radius
@@ -169,7 +167,7 @@ function App() {
                         <li className='horizontali'>Orbit automatically</li>
                         <li className='horizontali'>
                             <label className="container">
-                                <input type="checkbox" defaultChecked="false" onClick={handleChangeOrbit}/>
+                                <input type="checkbox" defaultChecked="true" onClick={handleChangeOrbit}/>
                                 <span className="checkmark"></span>
                             </label>
                         </li>
