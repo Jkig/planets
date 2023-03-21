@@ -21,3 +21,8 @@ standardize and fix up the perspective camera where i want it to be (doesn't mak
 can have ppl calibrate their screne by lining up moon and sun, and having a slider control perspective, will do this later...
 
 resize inputs so there is an inner half and outer half, can cover habitable zones, and then crazy stuff, more intuative
+
+
+More urgent:
+I need to allow camera/whole scene to resize if they make super crazy big systemes, for later
+there is a bug for other sized stars, probably unit conversion

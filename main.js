@@ -3,7 +3,9 @@ import "./style.css"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import galaxy from '/img/big_galaxy.jpg';
-import object from "./earthScene.json";
+// import object from "./earthScene.json";
+// import object from "./basicScene.json"
+const object = JSON.parse(localStorage.getItem("sceneData"))
 
 
 let sunSize = object.sunSize

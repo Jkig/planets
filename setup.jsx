@@ -81,33 +81,35 @@ function App() {
             sceneObject = earthScene
             // earth constant:
             // console.log("earth", 2*Math.PI*Math.sqrt(1/(6.6743e-11*5.972e24))) // earth
-            const earthGravitational = 3.147147566443759e-7
+            const earthGravitational = 3.147147566443759e-7;
 
-            sceneObject.orbitLength = Math.sqrt(Math.pow(data.distanceFromPlanet*sceneObject.planetSize*1000, 3))*earthGravitational
+            sceneObject.orbitLength = Math.sqrt(Math.pow(data.distanceFromPlanet*sceneObject.planetSize*1000, 3))*earthGravitational;
         }else{
             sceneObject = basicScene
             //  constant:
             // console.log("jupiter", 2*Math.PI*Math.sqrt(1/(6.6743e-11*1.899e27))) // jupiter
-            const jupiterGravitational = 1.764877328242383e-8
+            const jupiterGravitational = 1.764877328242383e-8;
             // then multiply by sqrt(r^3), r = planetradius*distanceFromPlanet
-            sceneObject.orbitLength = Math.sqrt(Math.pow(data.distanceFromPlanet*sceneObject.planetSize*1000, 3))*jupiterGravitational
+            sceneObject.orbitLength = Math.sqrt(Math.pow(data.distanceFromPlanet*sceneObject.planetSize*1000, 3))*jupiterGravitational;
         }
-        const starInfo = starProperties(data.mass)
+        const starInfo = starProperties(data.mass);
         // ourSun t/f
         if (!data.ourSun){
         // sun properties (size/color)
             sceneObject.sunColor = starInfo.color
             sceneObject.sunSize = starInfo.radius
+            console.log(sceneObject.sunSize)
         }
         // distance from sun
-        sceneObject.distanceFromSun = 149600000*data.distanceFromSun
+        sceneObject.distanceFromSun = 149600000*data.distanceFromSun;
         // distance from planet
-        sceneObject.distanceFromPlanet = sceneObject.planetSize*data.distanceFromPlanet
+        sceneObject.distanceFromPlanet = sceneObject.planetSize*data.distanceFromPlanet;
         // time for planet orbit (don't actually care about planets rn)
         // time for camera orbit -- handled in the if/else above
         // isCameraOrbit t/f
-        sceneObject.isCameraOrbit = data.orbiting
+        sceneObject.isCameraOrbit = data.orbiting;
         // now localstore
+        localStorage.setItem("sceneData", JSON.stringify(sceneObject));
     }
 
     return (
