@@ -63,6 +63,53 @@ if (object.isEarth){
     map: textureLoader.load(object.planetFile)
   });
 }
+// all the new shader stuff here:
+const uniforms = {
+  textureDay: { value: textureDay },
+  textureNight: { value: textureNight },
+  sunPosition: { value: new THREE.Vector3(0, 0, 0).normalize() },
+};
+
+const vertexShader = `
+  varying vec2 vUv;
+  varying vec3 vPosition;
+  varying vec3 vNormal;
+
+  void main() {
+    vUv = uv;
+    vPosition = position;
+    vNormal = normal;
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const fragmentShader = `
+  uniform sampler2D textureDay;
+  uniform sampler2D textureNight;
+  uniform vec3 sunPosition;
+
+  varying vec2 vUv;
+  varying vec3 vPosition;
+  varying vec3 vNormal;
+
+  void main() {
+    vec3 lightDirection = normalize(sunPosition - vPosition);
+    float lightIntensity = max(dot(vNormal, lightDirection), 0.0);
+    
+    vec4 dayColor = texture2D(textureDay, vUv);
+    vec4 nightColor = texture2D(textureNight, vUv);
+
+    gl_FragColor = mix(nightColor, dayColor, lightIntensity);
+  }
+`;
+// add if here later:
+planetTexture = new THREE.ShaderMaterial({
+  uniforms,
+  vertexShader,
+  fragmentShader,
+});
+
 
 const planet = new THREE.Mesh(planetGeometry, planetTexture);
 planet.rotation.z = object.tilt
