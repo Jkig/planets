@@ -4,8 +4,8 @@
     "ignore": [],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
+        "source": "/view.html",
+        "destination": "/view.html"
       }
     ]
   }
