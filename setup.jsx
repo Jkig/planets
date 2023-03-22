@@ -181,7 +181,7 @@ function App() {
                 </li>
                 <li>
                 <button className="createButton" type="submit" onClick={handleCalculate}>
-                    <a className="link" href="view.html">View your system!</a>
+                    <a className="link" href="view">View your system!</a>
                     </button>
                 </li>
             </ul>

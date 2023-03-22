@@ -31,3 +31,10 @@ probs a tiny bit of ambient light after shader for night stuff
 (night lights emissive??)
 
 maybe seperate earth and jupiter into different files
+
+
+
+
+TODOTODO::
+
+swaped view.html to view in setup.jsx link and in firebase.json, this may change things
