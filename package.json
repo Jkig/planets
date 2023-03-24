@@ -1,5 +1,5 @@
 {
-  "name": "planets",
+  "name": "testing",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,15 +8,16 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "devDependencies": {
-    "vite": "^4.0.0"
-  },
   "dependencies": {
-    "color-temperature": "^0.2.7",
-    "dat.gui": "^0.7.9",
-    "node": "^19.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.149.0"
+    "three": "^0.150.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "vite": "^4.2.0",
+    "vite-plugin-pages": "^0.29.0"
   }
 }

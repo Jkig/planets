@@ -1,13 +1,31 @@
 import * as THREE from "three"
-import "./style.css"
+import "./view.css"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import galaxy from '/img/big_galaxy.jpg';
 // import object from "./earthScene.json";
 // import object from "./basicScene.json"
+
 const object = JSON.parse(localStorage.getItem("sceneData"))
-
-
+/*
+const object = {cameraOrbit: 699110,
+  daylength: 35609,
+  distanceFromSun: 149600000,
+  isCameraOrbit: true,
+  isEarth: false,
+  luminosity: 3.828e+26,
+  orbitLenght: 306000,
+  orbitLength: 326236.6851002738,
+  ourSun: true,
+  planetFile: "/img/2k_jupiter.jpg",
+  planetMass: 1.899e+27,
+  planetSize: 69911,
+  speed: 0.01,
+  sunColor: "#FFFFFF",
+  sunSize: 1400000,
+  tilt: 0.05462881,
+  yearlength: 374371200}
+*/
 let sunSize = object.sunSize
 
 //let planetYearLength = object.yearlength*object.speed
@@ -64,54 +82,6 @@ if (object.isEarth){
   });
 }
 
-// all the new shader stuff here:
-/*
-const uniforms = {
-  textureDay: { value: textureDay },
-  textureNight: { value: textureNight },
-  sunPosition: { value: new THREE.Vector3(0, 0, 0).normalize() },
-};
-
-const vertexShader = `
-  varying vec2 vUv;
-  varying vec3 vPosition;
-  varying vec3 vNormal;
-
-  void main() {
-    vUv = uv;
-    vPosition = position;
-    vNormal = normal;
-
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const fragmentShader = `
-  uniform sampler2D textureDay;
-  uniform sampler2D textureNight;
-  uniform vec3 sunPosition;
-
-  varying vec2 vUv;
-  varying vec3 vPosition;
-  varying vec3 vNormal;
-
-  void main() {
-    vec3 lightDirection = vec3(1.0,0.0,0.0);
-    float lightIntensity = max(dot(vNormal, lightDirection), 0.0);
-    
-    vec4 dayColor = texture2D(textureDay, vUv);
-    vec4 nightColor = texture2D(textureNight, vUv);
-
-    gl_FragColor = mix(dayColor, nightColor, lightIntensity);
-  }
-`;
-// add if statement here:
-planetTexture = new THREE.ShaderMaterial({
-  uniforms,
-  vertexShader,
-  fragmentShader,
-});
-*/
 
 const planet = new THREE.Mesh(planetGeometry, planetTexture);
 planet.rotation.z = object.tilt
@@ -202,3 +172,25 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(sizes.width, sizes.height);
 });
+
+
+
+
+
+
+/*
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './view.module.css';
+// Import your React components for the view page
+
+const View = () => {
+  return (
+    <div>
+      further stuff here for View
+    </div>
+  );
+};
+
+ReactDOM.render(<View />, document.getElementById('view-root'));
+*/
