@@ -21,3 +21,7 @@ If you select your own sun, then the mass slider adjusts the color, size, as wel
 * React, Threejs (to work with webGL)
 * vite
 * firebase for hosting, it all actually runs on the client side
+
+
+# Source for images:
+https://www.solarsystemscope.com/textures/
