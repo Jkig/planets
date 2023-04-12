@@ -173,7 +173,7 @@ function App() {
         distanceFromSun: 1,// in AU
         closest: .75,
         furthest: 1.1,
-        orbiting: true,
+        orbiting: false,
         luminosity: 3.828e26,
     });
 
@@ -202,7 +202,6 @@ function App() {
 
     const handleChangePlanet = e =>{
         setData({...data, earth: e.target.checked})
-        console.log("use earth", e.target.checked)
     }
 
     const handleChangePlanetDistance = e =>{
@@ -333,7 +332,7 @@ function App() {
                         <li className='horizontali'>Orbit automatically</li>
                         <li className='horizontali'>
                             <label className="container">
-                                <input type="checkbox" defaultChecked="true" onClick={handleChangeOrbit}/>
+                                <input type="checkbox" onClick={handleChangeOrbit}/>
                                 <span className="checkmark"></span>
                             </label>
                         </li>
