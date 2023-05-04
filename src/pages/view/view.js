@@ -154,8 +154,8 @@ function animate(time) {
   planet.rotation.y = time / planetDayLength;
   // i should be able to make the folowing much less expensive
   if (object.isCameraOrbit){
-  camera.position.z = planet.position.z+object.cameraOrbit*Math.cos(time/cameraOrbitLenght);
-  camera.position.x = planet.position.x+object.cameraOrbit*Math.sin(time/cameraOrbitLenght);
+    camera.position.z = planet.position.z+object.cameraOrbit*Math.cos(time/cameraOrbitLenght);
+    camera.position.x = planet.position.x+object.cameraOrbit*Math.sin(time/cameraOrbitLenght);
   }
 
 

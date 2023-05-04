@@ -1,5 +1,6 @@
 {
     "planetFile": "/img/8k_earth_daymap.jpg",
+    "nightFile": "/img/8k_earth_nightmap.jpg",
     "planetMass": 5.972e24,
     "speed": 0.01,
   

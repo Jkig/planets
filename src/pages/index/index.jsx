@@ -14,6 +14,7 @@ function App() {
         ourSun: true,
         mass: 1,
         earth: false,
+        earthNight: false,
         distanceFromPlanet: 10,// in planet radii
         distanceFromSun: 1,// in AU
         closest: .75,
@@ -66,12 +67,16 @@ function App() {
     // orbit length calculated from orbits and junk ez (mass doesn't matter)
     // 1.496e8 // au to km,
 
-    const handleChangeDistance = e =>{
+    const handleChangeDistance = e => {
         setData({...data, distanceFromPlanet: Number(e.target.value)})
     }
 
-    const handleChangeOrbit = e =>{
+    const handleChangeOrbit = e => {
         setData({...data, orbiting: e.target.checked})
+    }
+
+    const handleChangeEarthNight = (e) => {
+        setData({...data, earthNight: e.target.checked})
     }
 
     const handleCalculate = () =>{
@@ -184,6 +189,17 @@ function App() {
                         </li>
                     </ul>
                 </li>
+                {data.earth && 
+                    <li><ul className='horizontal'>
+                        <li className='horizontali'>Earth Night mode (not for slow computers!)</li>
+                        <li className='horizontali'>
+                            <label className="container">
+                                <input type="checkbox" onClick={handleChangeEarthNight}/>
+                                <span className="checkmark"></span>
+                            </label>
+                        </li>
+                    </ul>
+                </li>}
                 <li>
                 <button className="createButton" type="submit" onClick={handleCalculate}>
                     <a href="view.html" className="link">View your system!</a>
