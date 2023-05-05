@@ -116,6 +116,10 @@ function App() {
         sceneObject.isCameraOrbit = data.orbiting;
         // luminosity
         sceneObject.luminosity = starInfo.luminosity
+
+        sceneObject.planetDayLength = sceneObject.daylength*sceneObject.speed
+        sceneObject.cameraOrbitLenght = sceneObject.orbitLenght*sceneObject.speed
+
         // now localstore
         localStorage.clear();
         localStorage.setItem("sceneData", JSON.stringify(sceneObject));
@@ -189,6 +193,7 @@ function App() {
                     <a href="view.html" className="link">View your system!</a>
                     </button>
                 </li>
+                <li><h1>final tests</h1></li>
             </ul>
             
         </div>
