@@ -7,22 +7,15 @@ import brightnessCalc from "./brightnesscalc"
 
 // setting up some basics for THREE
 const clock = new THREE.Clock();
-const sizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-};
-
-const renderer = new THREE.WebGLRenderer({
-  canvas: document.querySelector("#bg"),
-})
+const sizes = { width: window.innerWidth, height: window.innerHeight,};
+const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector("#bg"), })
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(5);
-
 const scene = new THREE.Scene();
 const textureLoader = new THREE.TextureLoader();
 
 
-// Starts the scene itself
+// Starts the particular scene
 const object = JSON.parse(localStorage.getItem("sceneData"))
 const textureDay = textureLoader.load(object.planetFile);
 const textureNight = textureLoader.load('../img/8k_earth_nightmap.jpg');
@@ -33,7 +26,7 @@ const textureNight = textureLoader.load('../img/8k_earth_nightmap.jpg');
 const outside = new THREE.SphereGeometry(object.distanceFromSun*15, 64, 64);
 const outsideMat = new THREE.MeshStandardMaterial({
   map: textureLoader.load('/img/big_galaxy.jpg'),
-  side: THREE.BackSide,//THREE.DoubleSide, // TODO can i get better preformance rendering "back"/inside?
+  side: THREE.BackSide,
 });
 const space = new THREE.Mesh(outside,outsideMat);
 scene.add(space)
@@ -65,6 +58,7 @@ planet.position.x = object.distanceFromSun;
 scene.add(planet);
 
 
+// bring all sun stuff into one line, need size, luminosity, color, but I could just pass in object
 const sun = new THREE.SphereGeometry(object.sunSize, 64, 64, );
 const brightness = brightnessCalc(object.luminosity)
 
@@ -72,7 +66,7 @@ const brightness = brightnessCalc(object.luminosity)
 // from here  \/ \/    // can compress all this into one line, or pair down. sun is special stuff:
 if (object.ourSun){
   object.sunColor = '#FDB813',
-  console.log("its our sun, so here we use #FDB813, in space, the sun is actually white #FFFFFF, ppl wouldn't like if i showed it this way though")
+  console.log("In space, the sun is actually white #FFFFFF, but we are used to its yellow color #FDB813")
 }
 const sunTexture = object.ourSun ? new THREE.MeshStandardMaterial({
   emissiveMap: textureLoader.load("../img/2k_sun.jpg"),
@@ -90,7 +84,7 @@ scene.add(meshSun);
 
 
 
-const light = new THREE.PointLight(object.sunColor, 0.9 + brightness*.4, object.distanceFromSun*2);//todo sun color
+const light = new THREE.PointLight(object.sunColor, 0.9 + brightness*.4, object.distanceFromSun*2);
 scene.add(light);
 const light_stars = new THREE.PointLight(0xFFFFFF, .15)// not dependent on sun
 scene.add(light_stars)
@@ -105,12 +99,18 @@ camera.position.z = object.cameraOrbit;
 camera.position.x = object.distanceFromSun;
 scene.add(camera);
 
-
 const controls = new OrbitControls(camera,renderer.domElement);
 const posiotion_center = new THREE.Vector3( object.distanceFromSun, 0, 0 );
 controls.target = posiotion_center;
 controls.update(clock.getDelta());
 
+
+
+
+
+
+
+// animation and window resize
 
 function animate(time) {
   requestAnimationFrame(animate);
