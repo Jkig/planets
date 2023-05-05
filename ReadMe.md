@@ -1,9 +1,5 @@
 README.md:
 
-# This branch is for testing new features.
-* https://testing-537d4.web.app/
-* To see tests in production
-
 # Try it out!
 https://planetarium-eeb82.web.app
 
