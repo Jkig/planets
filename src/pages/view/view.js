@@ -145,7 +145,7 @@ function animate(time) {
 };
 animate();
 
-// wonder if this is expensive, idk
+// wonder if this is expensive, can limit how many times it checks for preformance if i need
 window.addEventListener('resize', () => {
   sizes.width = window.innerWidth;
   sizes.height = window.innerHeight;
