@@ -18,5 +18,6 @@
     "cameraOrbit": 671000,
     "sunSize": 1400000,
   
+    "night": false,
     "tilt": 0.05462881
   }

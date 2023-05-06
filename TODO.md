@@ -18,3 +18,9 @@ then intsensity to something like .1-.15 (may depend on color, as oranger may ha
 
 * on good screens, there is the tiniest edge where we can see pixlated circle, good screens are correlated with good compute, so could either have an option for this, or see if we can ask what their screen pixles are.
 * preformance really isn't taking the hit I thought, More testing to do, but I think this is good so far
+
+
+# to tune for night map:
+* as long as ambient + point = .15, stars are good/where I want them
+* but need to distribute .15 -> those two and move emissive around
+* I like where i've gotten it, but may add option to change it up, lights may be too bright

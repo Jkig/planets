@@ -3,7 +3,7 @@ import "./view.css"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import buildScene from "./buildScene";
-import buildPlanetTexture from "./buildPlanetTexture";
+import buildPlanetTexture from "./buildPlanetTextureNIGHT";
 
 
 

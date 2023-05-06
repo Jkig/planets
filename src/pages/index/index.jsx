@@ -194,7 +194,6 @@ function App() {
                     <a href="view.html" className="link">View your system!</a>
                     </button>
                 </li>
-                <li><h1>final tests</h1></li>
             </ul>
             
         </div>

@@ -1,7 +1,7 @@
 {
     "planetFile": "/img/8k_earth_daymap.jpg",
     "planetMass": 5.972e24,
-    "speed": 0.01,
+    "speed": 0.05,
   
     "isCameraOrbit": true,
   
@@ -18,5 +18,6 @@
     "cameraOrbit": 67100,
     "sunSize": 1400000,
   
+    "night": false,
     "tilt": 0.4
   }

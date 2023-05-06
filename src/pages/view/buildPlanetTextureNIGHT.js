@@ -8,12 +8,15 @@ export default function buildPlanetTexture(object, textureLoader) {
     // pull planetTexture into its own file, then i can experiment with it, pass ot texture loader and object only
     let planetTexture = null;
     if (object.isEarth){
-    planetTexture = new THREE.MeshPhongMaterial({
-        map: textureDay,
+    planetTexture = new THREE.MeshStandardMaterial({
+        map: textureNight,
         bumpMap: textureLoader.load("../img/2k_earth_normal_map.jpg"),
         bumpScale: 0.5,
         specularMap: textureLoader.load("../img/2k_earth_specular_map.jpg"),
         shininess: 0.5,
+        emissive: "#ffe692",
+        emissiveMap: textureNight,
+        emissiveIntensity: .8,
     });
     }else{
     planetTexture = new THREE.MeshStandardMaterial({
