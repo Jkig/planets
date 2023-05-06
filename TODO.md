@@ -15,3 +15,5 @@ then intsensity to something like .1-.15 (may depend on color, as oranger may ha
 * ps setting emissive sets the color that is being emited, which then has values set by the emissive map
 
 * try either using a color picker or website to adjust hex by eye for different results
+
+* on good screens, there is the tiniest edge where we can see pixlated circle, good screens are correlated with good compute, so could either have an option for this, or see if we can ask what their screen pixles are.

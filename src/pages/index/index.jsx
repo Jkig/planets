@@ -7,7 +7,7 @@ import earthScene from "./earthScene.json";
 import basicScene from "./basicScene.json";
 
 import {starProperties, justLuminosity} from "./physicsCalculations"
-
+import brightnessCalc from './brightnesscalc';
 
 function App() {
     const [data, setData] = useState({
@@ -120,6 +120,7 @@ function App() {
         sceneObject.planetDayLength = sceneObject.daylength*sceneObject.speed
         sceneObject.cameraOrbitLenght = sceneObject.orbitLenght*sceneObject.speed
 
+        sceneObject.brightness = brightnessCalc(sceneObject.luminosity)
         // now localstore
         localStorage.clear();
         localStorage.setItem("sceneData", JSON.stringify(sceneObject));

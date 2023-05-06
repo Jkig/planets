@@ -2,115 +2,41 @@ import * as THREE from "three"
 import "./view.css"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-// my imports
-import brightnessCalc from "./brightnesscalc"
+import buildScene from "./buildScene";
+import buildPlanetTexture from "./buildPlanetTexture";
 
-// setting up some basics for THREE
+
+
 const clock = new THREE.Clock();
 const sizes = { width: window.innerWidth, height: window.innerHeight,};
+const textureLoader = new THREE.TextureLoader();
 const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector("#bg"), })
 renderer.setSize(sizes.width, sizes.height);
-renderer.setPixelRatio(5);
-const scene = new THREE.Scene();
-const textureLoader = new THREE.TextureLoader();
+renderer.setPixelRatio(2);
 
 
-// Starts the particular scene
 const object = JSON.parse(localStorage.getItem("sceneData"))
-const textureDay = textureLoader.load(object.planetFile);
-const textureNight = textureLoader.load('../img/8k_earth_nightmap.jpg');
+const scene = buildScene(object, textureLoader)
 
 
-// Objects/textures
-//    The galaxy/space background
-const outside = new THREE.SphereGeometry(object.distanceFromSun*15, 64, 64);
-const outsideMat = new THREE.MeshStandardMaterial({
-  map: textureLoader.load('/img/big_galaxy.jpg'),
-  side: THREE.BackSide,
-});
-const space = new THREE.Mesh(outside,outsideMat);
-scene.add(space)
-
-const planetGeometry = new THREE.SphereGeometry(object.planetSize, 64, 64, );
-
-
-// pull this logic into its own file.... and can remove the let planetTexture = null
-// pass in object.isEarth and object.planetFile
-let planetTexture = null;
-if (object.isEarth){
-  planetTexture = new THREE.MeshPhongMaterial({
-    map: textureDay,
-    bumpMap: textureLoader.load("../img/2k_earth_normal_map.jpg"),
-    bumpScale: 0.5,
-    specularMap: textureLoader.load("../img/2k_earth_specular_map.jpg"),
-    shininess: 0.5,
-  });
-}else{
-  planetTexture = new THREE.MeshStandardMaterial({
-    map: textureLoader.load(object.planetFile)
-  });
-}
-
-
-const planet = new THREE.Mesh(planetGeometry, planetTexture);
+const planetGeometry = new THREE.SphereGeometry(object.planetSize, 128, 128, );
+const planet = new THREE.Mesh(planetGeometry, buildPlanetTexture(object, textureLoader));
 planet.rotation.z = object.tilt
 planet.position.x = object.distanceFromSun;
 scene.add(planet);
 
 
-// bring all sun stuff into one line, need size, luminosity, color, but I could just pass in object
-const sun = new THREE.SphereGeometry(object.sunSize, 64, 64, );
-const brightness = brightnessCalc(object.luminosity)
-
-
-// from here  \/ \/    // can compress all this into one line, or pair down. sun is special stuff:
-if (object.ourSun){
-  object.sunColor = '#FDB813',
-  console.log("In space, the sun is actually white #FFFFFF, but we are used to its yellow color #FDB813")
-}
-const sunTexture = object.ourSun ? new THREE.MeshStandardMaterial({
-  emissiveMap: textureLoader.load("../img/2k_sun.jpg"),
-  emissiveIntensity: brightness,
-  emissive: 0xFFFFFF,
-}) : new THREE.MeshStandardMaterial({
-  emissiveMap: textureLoader.load("../img/2k_sun_grey.png"),
-  emissiveIntensity: brightness,
-  emissive: object.sunColor,
-}); new THREE.MeshBasicMaterial({color: object.sunColor,}); 
-// until here /\ /\
-
-const meshSun = new THREE.Mesh(sun, sunTexture);
-scene.add(meshSun);
-
-
-
-const light = new THREE.PointLight(object.sunColor, 0.9 + brightness*.4, object.distanceFromSun*2);
-scene.add(light);
-const light_stars = new THREE.PointLight(0xFFFFFF, .15)// not dependent on sun
-scene.add(light_stars)
-//const ambientLight = new THREE.AmbientLight(0xFFFFFF, .15)
-//scene.add(ambientLight)
-
-
-
-// camera (titan)
 const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 1, 3*object.distanceFromSun);
 camera.position.z = object.cameraOrbit;
 camera.position.x = object.distanceFromSun;
 scene.add(camera);
+
 
 const controls = new OrbitControls(camera,renderer.domElement);
 const posiotion_center = new THREE.Vector3( object.distanceFromSun, 0, 0 );
 controls.target = posiotion_center;
 controls.update(clock.getDelta());
 
-
-
-
-
-
-
-// animation and window resize
 
 function animate(time) {
   requestAnimationFrame(animate);
