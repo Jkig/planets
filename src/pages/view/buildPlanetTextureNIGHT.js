@@ -1,7 +1,7 @@
 import * as THREE from "three"
 
-export default function buildPlanetTexture(object, textureLoader) {
-    const textureDay = textureLoader.load(object.planetFile);
+export default function buildPlanetTextureNIGHT(object, textureLoader) {
+    //const textureDay = textureLoader.load(object.planetFile);
     const textureNight = textureLoader.load('../img/8k_earth_nightmap.jpg');
 
 

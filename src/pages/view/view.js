@@ -3,9 +3,8 @@ import "./view.css"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import buildScene from "./buildScene";
-import buildPlanetTexture from "./buildPlanetTextureNIGHT";
-
-
+import buildPlanetTexture from "./buildPlanetTexture";
+import buildPlanetTextureNIGHT from "./buildPlanetTextureNIGHT";
 
 const clock = new THREE.Clock();
 const sizes = { width: window.innerWidth, height: window.innerHeight,};
@@ -20,7 +19,7 @@ const scene = buildScene(object, textureLoader)
 
 
 const planetGeometry = new THREE.SphereGeometry(object.planetSize, 128, 128, );
-const planet = new THREE.Mesh(planetGeometry, buildPlanetTexture(object, textureLoader));
+const planet = new THREE.Mesh(planetGeometry, buildPlanetTextureNIGHT(object, textureLoader));
 planet.rotation.z = object.tilt
 planet.position.x = object.distanceFromSun;
 scene.add(planet);
