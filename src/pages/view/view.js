@@ -12,7 +12,7 @@ const sizes = { width: window.innerWidth, height: window.innerHeight,};
 const textureLoader = new THREE.TextureLoader();
 const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector("#bg"), })
 renderer.setSize(sizes.width, sizes.height);
-renderer.setPixelRatio(2);
+renderer.setPixelRatio(3);
 
 
 const object = JSON.parse(localStorage.getItem("sceneData"))
