@@ -6,8 +6,11 @@ import { useState } from 'react'
 import earthScene from "./earthScene.json";
 import basicScene from "./basicScene.json";
 
-import {starProperties, justLuminosity} from "./physicsCalculations"
+import { justLuminosity, starProperties } from "./physicsCalculations"
 import brightnessCalc from './brightnesscalc';
+
+// import handleCalculate from "./handleCalculate"
+// does a huge amount of the calculatioin, wanted to pull apart to simplify
 
 function App() {
     const [data, setData] = useState({
@@ -23,7 +26,7 @@ function App() {
         luminosity: 3.828e26,
     });
 
-    const [display, setDisplay] = useState(false);
+    // const [display, setDisplay] = useState(false);
 
     const handleChangeMass = e => {
         // take a 1-100 and put trough exponential
@@ -67,19 +70,16 @@ function App() {
             setData({...data, distanceFromSun: dist});
         }
     }
-    // calculate, special case for sun.., iff 1 solar mas on slider, then set on calculate
-    // orbit length calculated from orbits and junk ez (mass doesn't matter)
-    // 1.496e8 // au to km,
 
     const handleChangeDistance = e =>{
         setData({...data, distanceFromPlanet: Number(e.target.value)})
     }
 
-    const handleChangeOrbit = e =>{
+    const handleChangeOrbit = e => {
         setData({...data, orbiting: e.target.checked})
     }
 
-    const handleCalculate = () =>{
+    const handleCalculate = () => {
         let sceneObject = null
         // now set everything else
         if (data.earth){
@@ -87,7 +87,7 @@ function App() {
             // earth constant:
             // console.log("earth", 2*Math.PI*Math.sqrt(1/(6.6743e-11*5.972e24))) // earth
             const earthGravitational = 3.147147566443759e-7;
-
+    
             sceneObject.orbitLength = Math.sqrt(Math.pow(data.distanceFromPlanet*sceneObject.planetSize*1000, 3))*earthGravitational;
         }else{
             sceneObject = basicScene
@@ -107,12 +107,12 @@ function App() {
         }
         // distance from sun
         sceneObject.distanceFromSun = 149600000*data.distanceFromSun;
-
+    
         // if in sun, alert and force reload?? for now "no sun, you are in it"
         if (sceneObject.distanceFromSun <= sceneObject.sunSize){
             window.alert("You are in the sun, so it won't show up")
         }
-
+    
         // distance from planet
         sceneObject.cameraOrbit = sceneObject.planetSize*data.distanceFromPlanet;
         // time for planet orbit (don't actually care about planets rn)
@@ -121,17 +121,18 @@ function App() {
         sceneObject.isCameraOrbit = data.orbiting;
         // luminosity
         sceneObject.luminosity = starInfo.luminosity
-
+    
         sceneObject.planetDayLength = sceneObject.daylength*sceneObject.speed
         sceneObject.cameraOrbitLenght = sceneObject.orbitLenght*sceneObject.speed
-
+    
         sceneObject.brightness = brightnessCalc(sceneObject.luminosity)
         sceneObject.night = data.night
         // now localstore
         localStorage.clear();
         localStorage.setItem("sceneData", JSON.stringify(sceneObject));
-        setDisplay(true)
+        // setDisplay(true)
     }
+
     return (
         <div className='main'>
             <h1>Build the system</h1>
@@ -215,6 +216,5 @@ function App() {
         </div>
     )
 }
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
