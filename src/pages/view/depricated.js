@@ -22,7 +22,7 @@ const planetTexture = buildPlanetTexture(object,textureLoader);
 const planetTextureNIGHT = buildPlanetTextureNIGHT(object, textureLoader);
 
 const planetGeometry = new THREE.SphereGeometry(object.planetSize, 128, 128, );
-const planet = new THREE.Mesh(planetGeometry, object.night ? planetTextureNIGHT : planetTexture);
+const planet = new THREE.Mesh(planetGeometry, planetTextureNIGHT);
 planet.rotation.z = object.tilt
 planet.position.x = object.distanceFromSun;
 scene.add(planet);

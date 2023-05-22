@@ -14,6 +14,7 @@ function App() {
         ourSun: true,
         mass: 1,
         earth: false,
+        night: false,
         distanceFromPlanet: 10,// in planet radii
         distanceFromSun: 1,// in AU
         closest: .75,
@@ -47,6 +48,10 @@ function App() {
 
     const handleChangePlanet = e =>{
         setData({...data, earth: e.target.checked})
+    }
+    
+    const handleChangeNight = e =>{
+        setData({...data, night: e.target.checked})
     }
 
     const handleChangePlanetDistance = e =>{
@@ -121,6 +126,7 @@ function App() {
         sceneObject.cameraOrbitLenght = sceneObject.orbitLenght*sceneObject.speed
 
         sceneObject.brightness = brightnessCalc(sceneObject.luminosity)
+        sceneObject.night = data.night
         // now localstore
         localStorage.clear();
         localStorage.setItem("sceneData", JSON.stringify(sceneObject));
@@ -142,9 +148,19 @@ function App() {
                     </ul>
                 </li>
 
+                {data.earth && <ul className='horizontal'>
+                        <li className='horizontali'>Earth at Night</li>
+                        <li className='horizontali'>
+                            <label className="container">
+                                <input type="checkbox" onClick={handleChangeNight}/>
+                                <span className="checkmark"></span>
+                            </label>
+                        </li>
+                    </ul>}
+
                 <li>
                     <ul className='horizontal'>
-                        <li className='horizontali'>Just use our sun!</li>
+                        <li className='horizontali'>Just use our sun</li>
                         <li className='horizontali'>
                             <label className="container">
                                 <input type="checkbox" defaultChecked="true" onClick={handleChangeSun}/>
