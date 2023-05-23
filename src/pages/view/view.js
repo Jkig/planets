@@ -17,7 +17,6 @@ renderer.setPixelRatio(3);
 const object = JSON.parse(localStorage.getItem("sceneData"))
 const scene = buildScene(object, textureLoader)
 
-
 const planetTexture = buildPlanetTexture(object,textureLoader);
 const planetTextureNIGHT = buildPlanetTextureNIGHT(object, textureLoader);
 

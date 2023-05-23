@@ -1,0 +1,12 @@
+{
+    "ourSun": true,
+    "mass": 1,
+    "earth": false,
+    "night": false,
+    "distanceFromPlanet": 10,
+    "distanceFromSun": 1,
+    "closest": 0.75,
+    "furthest": 1.1,
+    "orbiting": false,
+    "luminosity": 3.828e26
+}

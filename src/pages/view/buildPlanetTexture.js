@@ -2,10 +2,6 @@ import * as THREE from "three"
 
 export default function buildPlanetTexture(object, textureLoader) {
     const textureDay = textureLoader.load(object.planetFile);
-    //const textureNight = textureLoader.load('../img/8k_earth_nightmap.jpg');
-
-
-    // pull planetTexture into its own file, then i can experiment with it, pass ot texture loader and object only
     let planetTexture = null;
     if (object.isEarth){
     planetTexture = new THREE.MeshPhongMaterial({
