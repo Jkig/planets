@@ -2,7 +2,7 @@
 import earthScene from "./earthScene.json";
 import basicScene from "./basicScene.json";
 
-import { justLuminosity, starProperties } from "./physicsCalculations"
+import { starProperties } from "./physicsCalculations"
 import brightnessCalc from './brightnesscalc';
 
 export default function handleCalculate(data) {

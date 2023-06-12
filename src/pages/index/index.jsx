@@ -7,17 +7,16 @@ import initializeData from "./initializeData.json"
 
 import { justLuminosity } from "./physicsCalculations"
 import handleCalculate from "./handleCalculate"
-// does a huge amount of the calculatioin, wanted to pull apart to simplify
+
 
 function App() {
     const [data, setData] = useState(initializeData);
 
-    const handleChangeSun = e =>{ setData({...data, ourSun: e.target.checked}) }
     const handleChangePlanet = e =>{ setData({...data, earth: e.target.checked}) }
     const handleChangeNight = e =>{ setData({...data, night: e.target.checked}) }
+    const handleChangeSun = e =>{ setData({...data, ourSun: e.target.checked}) }
     const handleChangeDistance = e =>{ setData({...data, distanceFromPlanet: Number(e.target.value)}) }
     const handleChangeOrbit = e => { setData({...data, orbiting: e.target.checked}) }
-    // handleCalculate is imported above
 
     const handleChangePlanetDistance = e =>{
         let dist = null
@@ -63,7 +62,6 @@ function App() {
                         </li>
                     </ul>
                 </li>
-
                 {data.earth && <ul className='horizontal'>
                         <li className='horizontali'>Earth at Night</li>
                         <li className='horizontali'>
@@ -73,7 +71,6 @@ function App() {
                             </label>
                         </li>
                 </ul>}
-
                 <li>
                     <ul className='horizontal'>
                         <li className='horizontali'>Just use our sun</li>
@@ -85,7 +82,6 @@ function App() {
                         </li>
                     </ul>
                 </li>
-
                 {!data.ourSun && <li>
                     <div>Size of star</div>
                     <div className="slidecontainer">
@@ -93,7 +89,6 @@ function App() {
                         {data.mass} Solar mass{(data.mass !== 1) && 'es'}
                     </div>
                 </li>}
-
                 <li>
                     <div className="slidecontainer">
                         <ul>
@@ -127,7 +122,6 @@ function App() {
                     </button>
                 </li>
             </ul>
-            
         </div>
     )
 }
