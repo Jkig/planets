@@ -25,26 +25,27 @@ const planetTextureNIGHT = buildPlanetTextureNIGHT(object, textureLoader);
 const planetGeometry = new THREE.SphereGeometry(object.planetSize, 128, 128, );
 
 
-
-// const planet = new THREE.Mesh(planetGeometry, object.night ? planetTextureNIGHT : planetTexture);
-
-const planet = new THREE.Mesh(planetGeometry, new THREE.ShaderMaterial({
-  
-  //bumpScale: 5,
-  //specular: new THREE.Color(0x333333),
-  //shininess: 50,
-  
-  uniforms: {
-    sunDirection: {
-      value: new THREE.Vector3(-1, 0, 0)
+if (object.isEarth) {
+  var planet = object.night ? new THREE.Mesh(planetGeometry, planetTextureNIGHT) : new THREE.Mesh(planetGeometry, new THREE.ShaderMaterial({
+    //bumpScale: 5,
+    //specular: new THREE.Color(0x333333),
+    //shininess: 50,
+    uniforms: {
+      sunDirection: {
+        value: new THREE.Vector3(-1, 0, 0)
+      },
+      dayTexture: {value: textureLoader.load("../img/8k_earth_daymap.jpg")},
+      nightTexture: {value: textureLoader.load("../img/8k_earth_nightmap.jpg")},
     },
-    dayTexture: {value: textureLoader.load("../img/8k_earth_daymap.jpg")},
-    nightTexture: {value: textureLoader.load("../img/8k_earth_nightmap.jpg")},
-  },
-  vertexShader: vertexShader,
-  fragmentShader: fragmentShader
-})
-)
+    vertexShader: vertexShader,
+    fragmentShader: fragmentShader
+  })
+  )
+}
+else {
+  var planet = new THREE.Mesh(planetGeometry, planetTexture)
+}
+
 
 
 planet.rotation.z = object.tilt
