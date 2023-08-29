@@ -11,9 +11,7 @@ export default function buildScene(object, textureLoader) {
     scene.add(new THREE.Mesh(outside,outsideMat))
 
 
-
     scene.add(sunMaker(object, textureLoader));
-
 
     const light = new THREE.PointLight(object.ourSun ? '#FFFFFF' : object.sunColor, 0.9 + object.brightness*.4, object.distanceFromSun*2);
     scene.add(light);

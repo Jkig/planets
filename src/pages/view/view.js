@@ -27,15 +27,24 @@ const planetGeometry = new THREE.SphereGeometry(object.planetSize, 128, 128, );
 
 if (object.isEarth) {
   var planet = object.night ? new THREE.Mesh(planetGeometry, planetTextureNIGHT) : new THREE.Mesh(planetGeometry, new THREE.ShaderMaterial({
-    //bumpScale: 5,
-    //specular: new THREE.Color(0x333333),
-    //shininess: 50,
     uniforms: {
       sunDirection: {
         value: new THREE.Vector3(-1, 0, 0)
       },
       dayTexture: {value: textureLoader.load("../img/8k_earth_daymap.jpg")},
       nightTexture: {value: textureLoader.load("../img/8k_earth_nightmap.jpg")},
+
+      // need to get these working, its pretty tough
+      bumpMap: { value: textureLoader.load("../img/2k_earth_normal_map.jpg") },
+      bumpScale: { value: 0.5 },
+
+      specularMap: {value: textureLoader.load("../img/2k_earth_specular_map.jpg")},
+      shininess: {value: 0.5},
+
+      emissive: { value: new THREE.Color("#ffe692") },
+      emissiveMap: { value: textureLoader.load("../img/8k_earth_nightmap.jpg") },
+      emissiveIntensity: { value: 0.8 },
+      // ending here
     },
     vertexShader: vertexShader,
     fragmentShader: fragmentShader
