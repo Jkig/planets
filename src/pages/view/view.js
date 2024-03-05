@@ -57,7 +57,7 @@ else {
 
 
 
-planet.rotation.z = object.tilt
+planet.rotation.z = .1*object.tilt
 planet.position.x = object.distanceFromSun;
 scene.add(planet);
 
